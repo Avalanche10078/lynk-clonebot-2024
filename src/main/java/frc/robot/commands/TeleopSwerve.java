@@ -15,20 +15,22 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+// TODO: add back vision later
 public class TeleopSwerve extends Command {
     private final Swerve s_Swerve;
-    private final ShooterSubsystem s_Shooter;
-    private final VisionSubsystem s_Vision;
+    // private final ShooterSubsystem s_Shooter;
+    // private final VisionSubsystem s_Vision;
     private final DoubleSupplier translationSup;
     private final DoubleSupplier strafeSup;
     private final DoubleSupplier rotationSup;
     private DoubleSupplier speedLimitRotSupplier;
-    private boolean inProgress = false;
+    // private boolean inProgress = false;
 
-    public TeleopSwerve(Swerve s_Swerve, ShooterSubsystem s_Shooter, VisionSubsystem s_Vision, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, DoubleSupplier speedLimitRotSupplier) {
+    public TeleopSwerve(Swerve s_Swerve, /* ShooterSubsystem s_Shooter, VisionSubsystem s_Vision, */ DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, DoubleSupplier speedLimitRotSupplier) {
         this.s_Swerve = s_Swerve;
-        this.s_Shooter = s_Shooter;
-        this.s_Vision = s_Vision;
+
+        // this.s_Shooter = s_Shooter;
+        // this.s_Vision = s_Vision;
         addRequirements(s_Swerve);
 
         this.translationSup = translationSup;
@@ -53,6 +55,7 @@ public class TeleopSwerve extends Command {
         }
 
         /* Override rotation if using vision to aim */
+        /* ADD BACK WHEN ORANGEPI INSTALLED
         if (SmartDashboard.getBoolean("Aiming enabled", true)) {
             if (s_Shooter.isAutoAimingActive()) {
                 Rotation2d angleError = s_Shooter.usingVision() ? s_Vision.angleError() : (s_Shooter.dumping() ? s_Swerve.dumpShotError() : (s_Shooter.sliding() ? s_Swerve.slideShotError() : new Rotation2d()));
@@ -67,7 +70,6 @@ public class TeleopSwerve extends Command {
                     rotationVal = Swerve.angleErrorToSpeed(angleError);
                 }
             } else if (Math.abs(rotationVal) < Constants.aimingOverride) {
-                /* Testing -- auto-aim when available */
                 if (IndexSubsystem.getInstance().haveNote() && s_Vision.haveSpeakerTarget()) {                
                     if (!inProgress) {
                         Swerve.angleErrorReset();
@@ -84,6 +86,7 @@ public class TeleopSwerve extends Command {
         } else {
             inProgress = false;
         }
+        */
 
         /* Drive */
         s_Swerve.drive(
