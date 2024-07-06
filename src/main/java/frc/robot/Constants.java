@@ -129,9 +129,9 @@ public final class Constants {
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
-            public static final int driveMotorID = 0;
-            public static final int angleMotorID = 1;
-            public static final int canCoderID = 0;
+            public static final int driveMotorID = 9;
+            public static final int angleMotorID = 12;
+            public static final int canCoderID = 3;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(33.39);
             public static final SwerveModuleConstants constants =
@@ -140,9 +140,9 @@ public final class Constants {
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 {
-            public static final int driveMotorID = 18;
-            public static final int angleMotorID = 19;
-            public static final int canCoderID = 1;
+            public static final int driveMotorID = 13;
+            public static final int angleMotorID = 10;
+            public static final int canCoderID = 5;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-70.83);
             public static final SwerveModuleConstants constants =
@@ -151,8 +151,8 @@ public final class Constants {
 
         /* Back Left Module - Module 2 */
         public static final class Mod2 {
-            public static final int driveMotorID = 8;
-            public static final int angleMotorID = 9;
+            public static final int driveMotorID = 7;
+            public static final int angleMotorID = 6;
             public static final int canCoderID = 2;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(163.82);
@@ -162,9 +162,9 @@ public final class Constants {
 
         /* Back Right Module - Module 3 */
         public static final class Mod3 {
-            public static final int driveMotorID = 10;
-            public static final int angleMotorID = 11;
-            public static final int canCoderID = 3;
+            public static final int driveMotorID = 11;
+            public static final int angleMotorID = 8;
+            public static final int canCoderID = 4;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-25.13);
             public static final SwerveModuleConstants constants =
@@ -174,7 +174,7 @@ public final class Constants {
 
     public class Intake {
         /* IDs */
-        public static final int intakeMotorID = 3;
+        public static final int intakeMotorID = 14;
         /* CANBus */
         public static final String intakeMotorCanBus = "rio";
         /* Motor Speed Values */
@@ -190,8 +190,8 @@ public final class Constants {
 
     public class Shooter {
         /* IDs */
-        public static final int topShooterID = 4;
-        public static final int bottomShooterID = 17;
+        public static final int topShooterID = 20;
+        public static final int bottomShooterID = 0;
         /* CANBus */
         public static final String shooterMotorCanBus = "rio";
         /* Motor Speed Values */
@@ -220,7 +220,7 @@ public final class Constants {
 
     public class Index {
         /* IDs */
-        public static final int indexMotorID = 13;
+        public static final int indexMotorID = 5;
         public static final int leftIndexSensorID = 0;
         public static final int rightIndexSensorID = 1;
         /* CANBus */
