@@ -59,7 +59,7 @@ public class RobotContainer {
     private final Trigger slideShotButton = driver.x();
     private final Trigger ampShotButton = driver.povDown();
     private final Trigger sourceAlignButton = driver.povUp();
-
+    private final Trigger podiumButton = driver.y();
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final IntakeSubsystem s_Intake = new IntakeSubsystem();
@@ -84,7 +84,7 @@ public class RobotContainer {
                         s_Swerve::getSpeedLimitRot
                         ));
 
-        s_Shooter.setDefaultCommand(Commands.startEnd(s_Shooter::idle, () -> {}, s_Shooter).withName("Shooter Idle"));
+        s_Shooter.setDefaultCommand(Commands.startEnd(s_Shooter::stop, () -> {}, s_Shooter).withName("Shooter Idle"));
         s_Index.setDefaultCommand(Commands.startEnd(s_Index::stop, () -> {}, s_Index).withName("Index Stop"));
 
         SmartDashboard.putData("Command scheduler", CommandScheduler.getInstance());
@@ -199,6 +199,7 @@ public class RobotContainer {
         // Allow for direct RPM setting
         SmartDashboard.putBoolean("Direct set RPM", false);
         SmartDashboard.putNumber("Shooter top RPM", 1000.0);
+
         SmartDashboard.putNumber("Shooter bottom RPM", 1000.0);
         SmartDashboard.putData("Idle shooter", s_Shooter.runOnce(() -> { s_Shooter.setRPM(500); }));
         SmartDashboard.putData("Zero Gyro", Commands.print("Zeroing gyro").andThen(Commands.runOnce(s_Swerve::zeroGyro, s_Swerve)).andThen(Commands.print("Gyro zeroed")));
@@ -245,7 +246,7 @@ public class RobotContainer {
         defaultShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(null); }).withName("Set default shot"));
         dumpShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.DUMP); }).withName("Set dump shot"));
         slideShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SLIDE); }).withName("Set slide shot"));
-
+        podiumButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.PODIUM); }).withName("Set slide shot"));
         ejectButton.whileTrue(new EjectCommand(s_Intake, s_Index, s_Shooter));
 
         // ampShotButton.whileTrue(ampPathCommand().withName("Amp path & shoot"));
