@@ -99,7 +99,8 @@ public class ShootCommand extends Command {
     }
     boolean precise = shooter.usingVision() && vision.distanceToSpeaker() > Constants.Shooter.farDistance;
     */
-    if (!feeding /* && shooter.isReady(precise) */) {
+    // TODO: USE PRECISE VAR AFTER PI INSTALLED
+    if (!feeding && shooter.isReady(false)) {
       boolean aligned = !autoAim || !SmartDashboard.getBoolean("Aiming enabled", true); // "Aligned" if not automatic aiming
       if (!shooterReady) {
         // System.out.println("Shooter is ready");
