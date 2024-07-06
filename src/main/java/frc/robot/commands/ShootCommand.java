@@ -25,7 +25,7 @@ public class ShootCommand extends Command {
   private boolean feeding = false;
   DoubleSupplier topSupplier = null;
   DoubleSupplier bottomSupplier = null;
-  private final VisionSubsystem vision = VisionSubsystem.getInstance();
+  // private final VisionSubsystem vision = VisionSubsystem.getInstance();
   private boolean cancelled = false;
   private boolean gone = false;
   private Timer postShotTimer = new Timer();
@@ -37,7 +37,7 @@ public class ShootCommand extends Command {
     addRequirements(shooter, index);
     this.shooter = shooter;
     this.index = index;
-    assert(vision != null);
+    // assert(vision != null);
   }
 
   public ShootCommand(ShooterSubsystem shooter, IndexSubsystem index, Swerve swerve) {
@@ -75,13 +75,9 @@ public class ShootCommand extends Command {
     if (topSupplier != null && bottomSupplier != null) {
       shooter.shoot(topSupplier.getAsDouble(), bottomSupplier.getAsDouble());
     } else {
-      if (!cancelled) {
-        if (!shooter.shoot()) {
-          System.out.println("Cancelling ShootCommand due to shoot() failure");
-          cancelled = true;
-        }
-      }
-      if (cancelled) {
+      if (!shooter.shoot()) {
+        System.out.println("Cancelling ShootCommand due to shoot() failure");
+        cancelled = true;
         cancel();
       }
     }
@@ -93,6 +89,7 @@ public class ShootCommand extends Command {
     if (cancelled) {
       return;
     }
+    /*
     if (shooter.usingVision() && !seenTarget) {
       seenTarget = vision.haveSpeakerTarget();
       if (!seenTarget) {
@@ -101,7 +98,9 @@ public class ShootCommand extends Command {
       }
     }
     boolean precise = shooter.usingVision() && vision.distanceToSpeaker() > Constants.Shooter.farDistance;
-    if (!feeding && shooter.isReady(precise)) {
+    */
+    // TODO: USE PRECISE VAR AFTER PI INSTALLED
+    if (!feeding && shooter.isReady(false)) {
       boolean aligned = !autoAim || !SmartDashboard.getBoolean("Aiming enabled", true); // "Aligned" if not automatic aiming
       if (!shooterReady) {
         // System.out.println("Shooter is ready");
@@ -109,10 +108,11 @@ public class ShootCommand extends Command {
       }
 
       if (!aligned) {
+        /*
         if (shooter.usingVision()) {
           // Aligned if vision is aligned with target
           aligned = vision.haveTarget() && Math.abs(vision.angleError().getDegrees()) < Constants.Vision.maxAngleError;
-        } else if (shooter.dumping()) {
+        } else */ if (shooter.dumping()) {
           if (swerve == null) {
             System.out.println("ERROR: Cannot aim for dumping without swerve object");
           } else {
@@ -132,7 +132,8 @@ public class ShootCommand extends Command {
       if (aligned) {
         index.feed();
         feeding = true;
-        System.out.printf("Shooting from vision angle %01.1f deg @ %01.1f inches\n", vision.angleToSpeaker().getDegrees(), Units.metersToInches(vision.distanceToSpeaker()));
+        // System.out.printf("Shooting from vision angle %01.1f deg @ %01.1f inches\n", vision.angleToSpeaker().getDegrees(), Units.metersToInches(vision.distanceToSpeaker()));
+        /*
         if (shooter.usingVision() && DriverStation.isAutonomousEnabled()) {
           Pose2d pose = vision.lastPose();
           if (swerve == null) {
@@ -142,6 +143,7 @@ public class ShootCommand extends Command {
             swerve.setPose(pose);
           }
         }
+         */
       }
     }
     if (topSupplier == null || bottomSupplier == null) {

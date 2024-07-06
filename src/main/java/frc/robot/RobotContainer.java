@@ -65,7 +65,7 @@ public class RobotContainer {
     private final IntakeSubsystem s_Intake = new IntakeSubsystem();
     private final ShooterSubsystem s_Shooter = new ShooterSubsystem();
     private final IndexSubsystem s_Index = new IndexSubsystem();
-    private final VisionSubsystem s_Vision = new VisionSubsystem();
+    // private final VisionSubsystem s_Vision = new VisionSubsystem();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -76,8 +76,8 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
                         s_Swerve,
-                        s_Shooter,
-                        s_Vision,
+                        // s_Shooter,
+                        // s_Vision,
                         () -> -translation.get() * Constants.driveStickSensitivity,
                         () -> -strafe.get() * Constants.driveStickSensitivity,
                         () -> -rotation.get() * Constants.turnStickSensitivity,
@@ -99,7 +99,7 @@ public class RobotContainer {
             Commands.print("Named 'Shoot' command starting")
             .andThen(
                 (Commands.print("Before ShootCommand").andThen(new ShootCommand(s_Shooter, s_Index, s_Swerve)).andThen(Commands.print("After ShootCommand")))
-                 .raceWith(Commands.print("Before AimCommand").andThen(new AimCommand(s_Swerve, s_Vision)).andThen(Commands.print("After AimCommand")))
+                 // .raceWith(Commands.print("Before AimCommand").andThen(new AimCommand(s_Swerve, s_Vision)).andThen(Commands.print("After AimCommand")))
                  .raceWith(Commands.print("Before waitSeconds").andThen(Commands.waitSeconds(2.50)).andThen(Commands.print("After waitSeconds"))))
             .andThen(Commands.print("After race group"))
             .andThen(Commands.print("Named 'Shoot' command ending"))
@@ -183,8 +183,8 @@ public class RobotContainer {
                 .raceWith(Commands.waitSeconds(1.00))))
             .andThen(Commands.print("Short Slide shot complete"))
         );
-        NamedCommands.registerCommand("Override rotation", Commands.runOnce(s_Vision::enableRotationTargetOverride));
-        NamedCommands.registerCommand("Restore rotation", Commands.runOnce(s_Vision::disableRotationTargetOverride));
+        // NamedCommands.registerCommand("Override rotation", Commands.runOnce(s_Vision::enableRotationTargetOverride));
+        // NamedCommands.registerCommand("Restore rotation", Commands.runOnce(s_Vision::disableRotationTargetOverride));
 
         // Build an autoChooser (defaults to none)
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -248,9 +248,9 @@ public class RobotContainer {
 
         ejectButton.whileTrue(new EjectCommand(s_Intake, s_Index, s_Shooter));
 
-        ampShotButton.whileTrue(ampPathCommand().withName("Amp path & shoot"));
-        sourceAlignButton.whileTrue(sourcePathCommand().withName("Source align"));
-        SmartDashboard.putData("Speaker align", speakerPathCommand());
+        // ampShotButton.whileTrue(ampPathCommand().withName("Amp path & shoot"));
+        // sourceAlignButton.whileTrue(sourcePathCommand().withName("Source align"));
+        // SmartDashboard.putData("Speaker align", speakerPathCommand());
     }
 
     /**
@@ -352,9 +352,11 @@ public class RobotContainer {
     }
 
     public void teleopInit() {
-        s_Vision.disableRotationTargetOverride();
+        //s_Vision.disableRotationTargetOverride();
     }
 
+
+    /* TODO: add back on install of vision system
     private Pose2d getAmpPose() {
         // Get pose from Vision
         if (!s_Vision.haveAmpTarget()) {
@@ -394,6 +396,9 @@ public class RobotContainer {
         return pose;
     }
 
+     */
+
+    /* TODO: add back when vision is installed
     private Command ampPathCommand() {
         PathPlannerPath path = PathPlannerPath.fromPathFile("To Amp");
 
@@ -469,4 +474,7 @@ public class RobotContainer {
         ).handleInterrupt(s_Vision::disableRotationTargetOverride)
         .withName("Speaker align");
     }
+
+
+     */
 }
