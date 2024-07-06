@@ -18,7 +18,7 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
-    public static final double driveStickSensitivity = 1.00; 
+    public static final double driveStickSensitivity = 1.00;
     public static final double turnStickSensitivity = 1.00;
     public static final double aimingOverride = 0.25;
 
@@ -31,7 +31,7 @@ public final class Constants {
         // Multipliers when speed limit is in effect;
         public static final double speedLimitRot = 0.50;
 
-        public static final COTSTalonFXSwerveConstants chosenModule =  
+        public static final COTSTalonFXSwerveConstants chosenModule =
             COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2_5);
 
         public static final Rotation2d blueDumpAngle = new Rotation2d(Units.degreesToRadians(-38.0));
@@ -45,13 +45,13 @@ public final class Constants {
         public static final double rotationIZone = 2.5; // degrees
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(21.75); 
+        public static final double trackWidth = Units.inchesToMeters(21.75);
         /* Center to Center distance of left and right modules in meters. */
-        public static final double wheelBase = Units.inchesToMeters(15.75); 
+        public static final double wheelBase = Units.inchesToMeters(15.75);
         /* Center to Center distance of front and rear module wheels in meters. */
         public static final double wheelCircumference = chosenModule.wheelCircumference * 0.965; // testing
 
-        /* Swerve Kinematics 
+        /* Swerve Kinematics
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
          public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
@@ -76,7 +76,7 @@ public final class Constants {
         public static final double angleCurrentThresholdTime = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveCurrentLimit = 40; 
+        public static final int driveCurrentLimit = 40;
         public static final int driveCurrentThreshold = 60;
         public static final double driveCurrentThresholdTime = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
@@ -93,18 +93,18 @@ public final class Constants {
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.10; //TODO: This must be tuned to specific robot
-        /* After completeing characterization and inserting 
-         * the KS, KV, and KA values into the code, tune the 
-         * drive motor kP until it doesn't overshoot and 
+        /* After completeing characterization and inserting
+         * the KS, KV, and KA values into the code, tune the
+         * drive motor kP until it doesn't overshoot and
          * doesnt oscilate around a target velocity. */
         public static final double driveKI = 0.0; //Leave driveKI at 0.0
         public static final double driveKD = 0.0; //Leave driveKD at 0.0
-        public static final double driveKF = 0.0; //Leave driveKF at 0.0 
+        public static final double driveKF = 0.0; //Leave driveKF at 0.0
 
-        /* Drive Motor Characterization Values From SYSID */ 
-        public static final double driveKS = 0.32; 
-        public static final double driveKV = 1.51; 
-        public static final double driveKA = 0.27;  
+        /* Drive Motor Characterization Values From SYSID */
+        public static final double driveKS = 0.32;
+        public static final double driveKV = 1.51;
+        public static final double driveKA = 0.27;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -128,46 +128,46 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 { 
+        public static final class Mod0 {
             public static final int driveMotorID = 0;
             public static final int angleMotorID = 1;
             public static final int canCoderID = 0;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(33.39);
-            public static final SwerveModuleConstants constants = 
+            public static final SwerveModuleConstants constants =
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 { 
+        public static final class Mod1 {
             public static final int driveMotorID = 18;
             public static final int angleMotorID = 19;
             public static final int canCoderID = 1;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-70.83);
-            public static final SwerveModuleConstants constants = 
+            public static final SwerveModuleConstants constants =
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
-        
+
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { 
+        public static final class Mod2 {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 2;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(163.82);
-            public static final SwerveModuleConstants constants = 
+            public static final SwerveModuleConstants constants =
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { 
+        public static final class Mod3 {
             public static final int driveMotorID = 10;
             public static final int angleMotorID = 11;
             public static final int canCoderID = 3;
             public static final String canBusID = swerveCanBus;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-25.13);
-            public static final SwerveModuleConstants constants = 
+            public static final SwerveModuleConstants constants =
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
     }
@@ -190,12 +190,12 @@ public final class Constants {
 
     public class Shooter {
         /* IDs */
-        public static final int topShooterID = 4; 
+        public static final int topShooterID = 4;
         public static final int bottomShooterID = 17;
         /* CANBus */
         public static final String shooterMotorCanBus = "rio";
         /* Motor Speed Values */
-        public static final double idleSpeed = 2500; 
+        public static final double idleSpeed = 2500;
         public static final double intakeSpeed = -800;
         public static final double stopSpeed = 0.00;
         public static final double topSpeed = 6000;
@@ -240,38 +240,6 @@ public final class Constants {
         public static final NeutralModeValue motorNeutralValue = NeutralModeValue.Brake;
     }
 
-    public class Climber {
-        /* IDs */
-        public static final int rightID = 47;
-        public static final int leftID = 48;
-        /* CANBus */
-        public static final String CanBus = "rio";
-        /* Motor Config Values */
-        public static final double peakForwardVoltage = 12.0;
-        public static final double peakReverseVoltage = -12.0;
-        public static final InvertedValue motorOutputInverted = InvertedValue.Clockwise_Positive;
-        public static final NeutralModeValue motorNeutralValue = NeutralModeValue.Brake;
-
-        public static final double extendedPosition = -230.0;
-        // public static final double midPosition = -100.0; //-450.0;  
-        public static final double retractedPosition = -15.0;
-        public static final double positionError = 1.0;
-        public static final double slowVoltage = 1.5;
-
-        public static final double RPSperVolt = 7.9; // RPS increase with every volt
-        public static final double kP = 0.50; // output per unit of error in position (output/rotation)
-        public static final double kI = 0.0; // output per unit of integrated error in position (output/(rotation*s))
-        public static final double kD = 0.0; // output per unit of error in velocity (output/rps)
-        public static final double kS = 0.22; // output to overcome static friction (output)
-        public static final double kV = 1.0 / RPSperVolt; // output per unit of target velocity (output/rps)
-        public static final double kA = 0.0; // output per unit of target acceleration (output/(rps/s))
-        public static final double kG = 0.0; // do not factory in gravity
-        public static final double cruiseVelocity = 120.0; // RPS
-        public static final double acceleration = cruiseVelocity * 0.5; // Accelerate in 0.5 seconds
-        
-        public static final double timeCutOff = 25.0;
-    }
-
     public static final class Vision {
         public static final String cameraName = "Arducam_OV2311_USB_Camera";
         public static final Translation2d blueSpeakerLocation = new Translation2d(0.0, 5.548);
@@ -283,7 +251,7 @@ public final class Constants {
         public static final double maxAngleError = 1.0; // degrees
         public static final double calibrationFactorRed  =  0.933; // 0.930;
         public static final double calibrationOffsetRed  = Units.inchesToMeters(0.73); // -1.3);
-        public static final double calibrationFactorBlue =  0.933; // 0.941; 
+        public static final double calibrationFactorBlue =  0.933; // 0.941;
         public static final double calibrationOffsetBlue = Units.inchesToMeters(0.73); // 0.2);
     }
 
@@ -292,11 +260,11 @@ public final class Constants {
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-    
+
         public static final double kPXController = 1;
         public static final double kPYController = 1;
         public static final double kPThetaController = 1;
-    
+
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(

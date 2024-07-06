@@ -10,9 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.IndexSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.LEDSubsystem.TempState;
 
 public class ShooterIntakeCommand extends Command {
   private final ShooterSubsystem shooter;
@@ -35,7 +33,6 @@ public class ShooterIntakeCommand extends Command {
     seenIt = false;
     shooter.intake();
     index.eject();
-    LEDSubsystem.setTempState(TempState.SHINTAKING);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -65,8 +62,6 @@ public class ShooterIntakeCommand extends Command {
   public void end(boolean interrupted) {
     shooter.stop();
     index.stop();
-
-    LEDSubsystem.clearTempState();
 
     if (!interrupted) {
       CommandScheduler.getInstance().schedule(

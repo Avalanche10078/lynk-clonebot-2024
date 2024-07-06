@@ -14,11 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IndexSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.LEDSubsystem.TempState;
 
 public class ShootCommand extends Command {
   private final ShooterSubsystem shooter;
@@ -69,7 +67,6 @@ public class ShootCommand extends Command {
   public void initialize() {
     // System.out.println("Spinning up shooter");
     shooterReady = false;
-    LEDSubsystem.setTempState(TempState.SHOOTING);
     cancelled = false;
     seenTarget = false;
     feeding = false;
@@ -85,7 +82,6 @@ public class ShootCommand extends Command {
         }
       }
       if (cancelled) {
-        LEDSubsystem.setTempState(TempState.ERROR);
         cancel();
       }
     }
@@ -154,7 +150,6 @@ public class ShootCommand extends Command {
         System.out.println("Cancelling ShootCommand due to shoot() failure [2]");
         cancelled = true;
         cancel();
-        LEDSubsystem.setTempState(TempState.ERROR);
       }
     }
     if (feeding) {
@@ -176,13 +171,6 @@ public class ShootCommand extends Command {
 
     // Restore default shot
     shooter.setNextShot(null);
-
-    // Adjust LED state
-    if (interrupted) {
-      LEDSubsystem.setTempState(TempState.ERROR);
-    } else {
-      LEDSubsystem.clearTempState();
-    }
  }
 
   // Returns true when the command should end.

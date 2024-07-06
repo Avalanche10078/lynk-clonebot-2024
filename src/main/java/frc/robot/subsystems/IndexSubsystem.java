@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.LEDSubsystem.BaseState;
 
 public class IndexSubsystem extends SubsystemBase {
   private static IndexSubsystem instance = null;
@@ -87,7 +86,6 @@ public class IndexSubsystem extends SubsystemBase {
         System.out.println("DEBUG: Note presence detected");
       }
       haveNote = currentVal;
-      LEDSubsystem.setBaseState(haveNote ? BaseState.NOTE : BaseState.EMPTY);
     }
     SmartDashboard.putBoolean("indexer/Have note", haveNote);
     SmartDashboard.putBoolean("indexer/Left sensor", leftIndexSensor.get());

@@ -16,7 +16,6 @@ This is the repository where our robot code will be held year after year.
     - Multi-Note Auto
         - 3 Note Auto
     - Many Auto Routines
-- Climb
 
 ### Control Stack 
 #### Swerve
@@ -43,21 +42,8 @@ This is the repository where our robot code will be held year after year.
         - Kraken X60
             - CANBus: Rio
 
-#### Climber
-- Thrifty Telescoping Climb Kit
-    - Geared
-        - REV MaxPlanetary: TBD:TBD 
-    - Motors:
-        - Left Side: Kraken X60
-            - CANBus: Rio
-        - Right Side: Kraken X60
-            - CANBus: Rio
-
 #### Vision
 - Limelight 3
-
-#### LEDs (Potentially)
-- TBD
 
 ### Software Stack
 - [PathPlanner](https://github.com/mjansen4857/pathplanner)
