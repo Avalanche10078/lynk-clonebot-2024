@@ -50,13 +50,14 @@ public class RobotContainer {
     /* Driver Buttons */
     private final Trigger intakeButton = driver.leftBumper();
     private final Trigger shooterButton = driver.rightBumper();
-    private final Trigger ejectButton = driver.start();
+    private final Trigger ejectButton = driver.leftTrigger();
+    private final Trigger resetHeadingButton = driver.start();
 
     /* Different Position Test Buttons */
     private final Trigger ampButton = driver.a();
     private final Trigger dumpShotButton = driver.b();
     private final Trigger defaultShotButton = driver.back();
-    private final Trigger slideShotButton = driver.x();
+    private final Trigger subwooferButton = driver.x();
     private final Trigger ampShotButton = driver.povDown();
     private final Trigger sourceAlignButton = driver.povUp();
     private final Trigger podiumButton = driver.y();
@@ -245,9 +246,15 @@ public class RobotContainer {
         ampButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.AMP); }).withName("Set amp shot"));
         defaultShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(null); }).withName("Set default shot"));
         dumpShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.DUMP); }).withName("Set dump shot"));
-        slideShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SLIDE); }).withName("Set slide shot"));
+        subwooferButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SUBWOOFER); }).withName("Set slide shot"));
         podiumButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.PODIUM); }).withName("Set slide shot"));
         ejectButton.whileTrue(new EjectCommand(s_Intake, s_Index, s_Shooter));
+
+        resetHeadingButton.onTrue(
+                Commands.print("Resetting heading")
+                        .andThen(Commands.runOnce(s_Swerve::resetHeading, s_Swerve))
+                        .andThen(Commands.print("Heading reset"))
+        );
 
         // ampShotButton.whileTrue(ampPathCommand().withName("Amp path & shoot"));
         // sourceAlignButton.whileTrue(sourcePathCommand().withName("Source align"));
