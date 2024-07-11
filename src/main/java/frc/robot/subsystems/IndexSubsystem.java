@@ -82,8 +82,7 @@ public class IndexSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         boolean currentVal = haveNote();
-       // System.out.println("left: " + leftIndexSensor.get());
-       // System.out.println("right: " + rightIndexSensor.get());
+        
         if (currentVal != haveNote) {
             if (currentVal) {
                 System.out.println("DEBUG: Note presence detected");
