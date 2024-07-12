@@ -19,7 +19,7 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double driveStickSensitivity = 1.00;
-    public static final double turnStickSensitivity = 1.00;
+    public static final double turnStickSensitivity = 0.50;
     public static final double aimingOverride = 0.25;
 
     public static final boolean tuningMode = true;
