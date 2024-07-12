@@ -50,22 +50,23 @@ public class RobotContainer {
     /* Driver Buttons */
     private final Trigger intakeButton = driver.leftBumper();
     private final Trigger shooterButton = driver.rightBumper();
-    private final Trigger ejectButton = driver.start();
+    private final Trigger ejectButton = driver.leftTrigger();
+    private final Trigger resetHeadingButton = driver.start();
 
     /* Different Position Test Buttons */
     private final Trigger ampButton = driver.a();
     private final Trigger dumpShotButton = driver.b();
     private final Trigger defaultShotButton = driver.back();
-    private final Trigger slideShotButton = driver.x();
+    private final Trigger subwooferButton = driver.x();
     private final Trigger ampShotButton = driver.povDown();
     private final Trigger sourceAlignButton = driver.povUp();
-
+    private final Trigger podiumButton = driver.y();
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final IntakeSubsystem s_Intake = new IntakeSubsystem();
     private final ShooterSubsystem s_Shooter = new ShooterSubsystem();
     private final IndexSubsystem s_Index = new IndexSubsystem();
-    private final VisionSubsystem s_Vision = new VisionSubsystem();
+    // private final VisionSubsystem s_Vision = new VisionSubsystem();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -76,15 +77,15 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
                         s_Swerve,
-                        s_Shooter,
-                        s_Vision,
+                        // s_Shooter,
+                        // s_Vision,
                         () -> -translation.get() * Constants.driveStickSensitivity,
                         () -> -strafe.get() * Constants.driveStickSensitivity,
                         () -> -rotation.get() * Constants.turnStickSensitivity,
                         s_Swerve::getSpeedLimitRot
                         ));
 
-        s_Shooter.setDefaultCommand(Commands.startEnd(s_Shooter::idle, () -> {}, s_Shooter).withName("Shooter Idle"));
+        s_Shooter.setDefaultCommand(Commands.startEnd(s_Shooter::stop, () -> {}, s_Shooter).withName("Shooter Idle"));
         s_Index.setDefaultCommand(Commands.startEnd(s_Index::stop, () -> {}, s_Index).withName("Index Stop"));
 
         SmartDashboard.putData("Command scheduler", CommandScheduler.getInstance());
@@ -99,7 +100,7 @@ public class RobotContainer {
             Commands.print("Named 'Shoot' command starting")
             .andThen(
                 (Commands.print("Before ShootCommand").andThen(new ShootCommand(s_Shooter, s_Index, s_Swerve)).andThen(Commands.print("After ShootCommand")))
-                 .raceWith(Commands.print("Before AimCommand").andThen(new AimCommand(s_Swerve, s_Vision)).andThen(Commands.print("After AimCommand")))
+                 // .raceWith(Commands.print("Before AimCommand").andThen(new AimCommand(s_Swerve, s_Vision)).andThen(Commands.print("After AimCommand")))
                  .raceWith(Commands.print("Before waitSeconds").andThen(Commands.waitSeconds(2.50)).andThen(Commands.print("After waitSeconds"))))
             .andThen(Commands.print("After race group"))
             .andThen(Commands.print("Named 'Shoot' command ending"))
@@ -183,8 +184,8 @@ public class RobotContainer {
                 .raceWith(Commands.waitSeconds(1.00))))
             .andThen(Commands.print("Short Slide shot complete"))
         );
-        NamedCommands.registerCommand("Override rotation", Commands.runOnce(s_Vision::enableRotationTargetOverride));
-        NamedCommands.registerCommand("Restore rotation", Commands.runOnce(s_Vision::disableRotationTargetOverride));
+        // NamedCommands.registerCommand("Override rotation", Commands.runOnce(s_Vision::enableRotationTargetOverride));
+        // NamedCommands.registerCommand("Restore rotation", Commands.runOnce(s_Vision::disableRotationTargetOverride));
 
         // Build an autoChooser (defaults to none)
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -199,6 +200,7 @@ public class RobotContainer {
         // Allow for direct RPM setting
         SmartDashboard.putBoolean("Direct set RPM", false);
         SmartDashboard.putNumber("Shooter top RPM", 1000.0);
+
         SmartDashboard.putNumber("Shooter bottom RPM", 1000.0);
         SmartDashboard.putData("Idle shooter", s_Shooter.runOnce(() -> { s_Shooter.setRPM(500); }));
         SmartDashboard.putData("Zero Gyro", Commands.print("Zeroing gyro").andThen(Commands.runOnce(s_Swerve::zeroGyro, s_Swerve)).andThen(Commands.print("Gyro zeroed")));
@@ -244,13 +246,19 @@ public class RobotContainer {
         ampButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.AMP); }).withName("Set amp shot"));
         defaultShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(null); }).withName("Set default shot"));
         dumpShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.DUMP); }).withName("Set dump shot"));
-        slideShotButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SLIDE); }).withName("Set slide shot"));
-
+        subwooferButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SUBWOOFER); }).withName("Set slide shot"));
+        podiumButton.onTrue(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.PODIUM); }).withName("Set slide shot"));
         ejectButton.whileTrue(new EjectCommand(s_Intake, s_Index, s_Shooter));
 
-        ampShotButton.whileTrue(ampPathCommand().withName("Amp path & shoot"));
-        sourceAlignButton.whileTrue(sourcePathCommand().withName("Source align"));
-        SmartDashboard.putData("Speaker align", speakerPathCommand());
+        resetHeadingButton.onTrue(
+                Commands.print("Resetting heading")
+                        .andThen(Commands.runOnce(s_Swerve::resetHeading, s_Swerve))
+                        .andThen(Commands.print("Heading reset"))
+        );
+
+        // ampShotButton.whileTrue(ampPathCommand().withName("Amp path & shoot"));
+        // sourceAlignButton.whileTrue(sourcePathCommand().withName("Source align"));
+        // SmartDashboard.putData("Speaker align", speakerPathCommand());
     }
 
     /**
@@ -352,9 +360,11 @@ public class RobotContainer {
     }
 
     public void teleopInit() {
-        s_Vision.disableRotationTargetOverride();
+        //s_Vision.disableRotationTargetOverride();
     }
 
+
+    /* TODO: add back on install of vision system
     private Pose2d getAmpPose() {
         // Get pose from Vision
         if (!s_Vision.haveAmpTarget()) {
@@ -394,6 +404,9 @@ public class RobotContainer {
         return pose;
     }
 
+     */
+
+    /* TODO: add back when vision is installed
     private Command ampPathCommand() {
         PathPlannerPath path = PathPlannerPath.fromPathFile("To Amp");
 
@@ -469,4 +482,7 @@ public class RobotContainer {
         ).handleInterrupt(s_Vision::disableRotationTargetOverride)
         .withName("Speaker align");
     }
+
+
+     */
 }

@@ -60,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
     MIDLINE,
     PODIUM,
     FULL,
-    VISION,
+    // VISION,
     SOURCESIDEOTF,
     AMPSIDEOTF,
     OTF,
@@ -80,7 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
       Map.entry(Speed.AMP, new ShooterSpeed(350, 950)),
       Map.entry(Speed.SUBWOOFER, new ShooterSpeed(1360, 2830)),
       Map.entry(Speed.MIDLINE, new ShooterSpeed(2800, 2300)),
-      Map.entry(Speed.PODIUM, new ShooterSpeed(3000, 1600)),
+      Map.entry(Speed.PODIUM, new ShooterSpeed(3500, 1600)),
       Map.entry(Speed.FULL, new ShooterSpeed(Constants.Shooter.topSpeed, Constants.Shooter.topSpeed)),
       Map.entry(Speed.OTF, new ShooterSpeed(3000, 1600)),
       Map.entry(Speed.SOURCESIDEOTF, new ShooterSpeed(2950, 1925)),
@@ -112,9 +112,9 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("shooter/Top RPM adjustment", 0.0);
     SmartDashboard.putNumber("shooter/Bottom RPM adjustment", 0.0);
 
-    defaultShotChooser.setDefaultOption("== VISION ==", Speed.VISION);
+    defaultShotChooser.setDefaultOption("== SUBWOOFER ==", Speed.SUBWOOFER);
     for (Speed speed : Speed.values()) {
-      if (speed != Speed.VISION) {
+      if (speed != Speed.SUBWOOFER) {
         defaultShotChooser.addOption(speed.toString(), speed);
       }
     }
@@ -206,6 +206,7 @@ public class ShooterSubsystem extends SubsystemBase {
       speed = defaultSpeed();
     }
 
+    /*
     if (speed == Speed.VISION) {
       double distance = VisionSubsystem.getInstance().distanceToSpeaker();
       shooterSpeed = speedFromDistance(distance);
@@ -216,9 +217,11 @@ public class ShooterSubsystem extends SubsystemBase {
       //System.out.printf("Shoot @ %01.2f ft: %d, %d%n", VisionSubsystem.getInstance().distanceToSpeaker(), (int)shooterSpeed.topMotorSpeed, (int)shooterSpeed.bottomMotorSpeed);
       autoAimingActive = true;
     } else {
-      shooterSpeed = shooterSpeeds.get(speed);
-      autoAimingActive = (speed == Speed.DUMP || speed == Speed.SLIDE);
+
     }
+     */
+    shooterSpeed = shooterSpeeds.get(speed);
+    autoAimingActive = (speed == Speed.DUMP || speed == Speed.SLIDE);
 
     setCurrentSpeed(shooterSpeed);
     return true;
@@ -269,9 +272,11 @@ public class ShooterSubsystem extends SubsystemBase {
       Math.abs(toRPM(bottom.getVelocity().getValueAsDouble()) - bottomCurrentTarget) < (precise ? Constants.Shooter.maxRPMErrorLong : Constants.Shooter.maxRPMError));
   }
 
+  /*
   public boolean usingVision() {
     return nextShot == Speed.VISION || (nextShot == null && defaultSpeed() == Speed.VISION);
   }
+   */
 
   public boolean dumping() {
     return nextShot == Speed.DUMP || (nextShot == null && defaultSpeed() == Speed.DUMP);
@@ -295,6 +300,6 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("shooter/Bottom RPM err", bottomVel - bottomCurrentTarget);
     SmartDashboard.putBoolean("shooter/ready", isReady(false));
     SmartDashboard.putString("shooter/Next shot", nextShot == null ? defaultSpeed().toString() : nextShot.toString());
-    SmartDashboard.putBoolean("shooter/usingVision", usingVision());
+    // SmartDashboard.putBoolean("shooter/usingVision", usingVision());
   }
 }

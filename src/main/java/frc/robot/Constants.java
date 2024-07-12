@@ -19,20 +19,20 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double driveStickSensitivity = 1.00;
-    public static final double turnStickSensitivity = 1.00;
+    public static final double turnStickSensitivity = 0.50;
     public static final double aimingOverride = 0.25;
 
     public static final boolean tuningMode = true;
 
     public static final class Swerve {
         public static final int pigeonID = 1;
-        public static final String swerveCanBus = "lynk";
+        public static final String swerveCanBus = "canivoreBus";
 
         // Multipliers when speed limit is in effect;
         public static final double speedLimitRot = 0.50;
 
         public static final COTSTalonFXSwerveConstants chosenModule =
-            COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2_5);
+                COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2_5);
 
         public static final Rotation2d blueDumpAngle = new Rotation2d(Units.degreesToRadians(-38.0));
         public static final Rotation2d redDumpAngle = new Rotation2d(Units.degreesToRadians(-142.0));
@@ -53,11 +53,11 @@ public final class Constants {
 
         /* Swerve Kinematics
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
-         public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+        public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+                new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+                new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
+                new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+                new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
         /* Module Gear Ratios */
         public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -107,7 +107,9 @@ public final class Constants {
         public static final double driveKA = 0.27;
 
         /* Swerve Profiling Values */
-        /** Meters per Second */
+        /**
+         * Meters per Second
+         */
         public static final double maxSpeed = 5.21208; //L2.5 therotical max speed, test later.
         /* These are theorectial values to start with, tune after
          * Kraken FOC (L1.0): ft/s = 12.4 | m/s = 3.77952
@@ -117,7 +119,9 @@ public final class Constants {
          * Kraken FOC (L3.0): ft/s = 16.5 | m/s = 5.0292
          * Kraken FOC (L3.5): ft/s = 18.9 | m/s = 5.76072
          */
-        /** Radians per Second */
+        /**
+         * Radians per Second
+         */
         // public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
         public static final double driveRadius = Math.hypot(wheelBase, trackWidth) / 2.0;
         public static final double maxAngularVelocity = maxSpeed / driveRadius;
@@ -129,52 +133,52 @@ public final class Constants {
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
-            public static final int driveMotorID = 0;
-            public static final int angleMotorID = 1;
-            public static final int canCoderID = 0;
+            public static final int driveMotorID = 9;
+            public static final int angleMotorID = 12;
+            public static final int canCoderID = 3;
             public static final String canBusID = swerveCanBus;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(33.39);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(162.510);
             public static final SwerveModuleConstants constants =
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
+                    new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 {
-            public static final int driveMotorID = 18;
-            public static final int angleMotorID = 19;
-            public static final int canCoderID = 1;
+            public static final int driveMotorID = 13;
+            public static final int angleMotorID = 10;
+            public static final int canCoderID = 5;
             public static final String canBusID = swerveCanBus;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-70.83);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(144.756  + 180.0);
             public static final SwerveModuleConstants constants =
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
+                    new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
 
         /* Back Left Module - Module 2 */
         public static final class Mod2 {
-            public static final int driveMotorID = 8;
-            public static final int angleMotorID = 9;
+            public static final int driveMotorID = 7;
+            public static final int angleMotorID = 6;
             public static final int canCoderID = 2;
             public static final String canBusID = swerveCanBus;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(163.82);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(55.020);
             public static final SwerveModuleConstants constants =
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
+                    new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
 
         /* Back Right Module - Module 3 */
         public static final class Mod3 {
-            public static final int driveMotorID = 10;
-            public static final int angleMotorID = 11;
-            public static final int canCoderID = 3;
+            public static final int driveMotorID = 11;
+            public static final int angleMotorID = 8;
+            public static final int canCoderID = 4;
             public static final String canBusID = swerveCanBus;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-25.13);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-53.877 + 180.0);
             public static final SwerveModuleConstants constants =
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
+                    new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, canBusID, angleOffset);
         }
     }
 
-    public class Intake {
+    public static class Intake {
         /* IDs */
-        public static final int intakeMotorID = 3;
+        public static final int intakeMotorID = 14;
         /* CANBus */
         public static final String intakeMotorCanBus = "rio";
         /* Motor Speed Values */
@@ -190,12 +194,12 @@ public final class Constants {
 
     public class Shooter {
         /* IDs */
-        public static final int topShooterID = 4;
-        public static final int bottomShooterID = 17;
+        public static final int topShooterID = 20;
+        public static final int bottomShooterID = 0;
         /* CANBus */
         public static final String shooterMotorCanBus = "rio";
         /* Motor Speed Values */
-        public static final double idleSpeed = 2500;
+        public static final double idleSpeed = 3000;
         public static final double intakeSpeed = -800;
         public static final double stopSpeed = 0.00;
         public static final double topSpeed = 6000;
@@ -220,7 +224,7 @@ public final class Constants {
 
     public class Index {
         /* IDs */
-        public static final int indexMotorID = 13;
+        public static final int indexMotorID = 5;
         public static final int leftIndexSensorID = 0;
         public static final int rightIndexSensorID = 1;
         /* CANBus */
@@ -236,7 +240,7 @@ public final class Constants {
         /* Motor Config Values */
         public static final double peakForwardVoltage = 12.0;
         public static final double peakReverseVoltage = -12.0;
-        public static final InvertedValue motorOutputInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue motorOutputInverted = InvertedValue.CounterClockwise_Positive;
         public static final NeutralModeValue motorNeutralValue = NeutralModeValue.Brake;
     }
 
@@ -245,13 +249,13 @@ public final class Constants {
         public static final Translation2d blueSpeakerLocation = new Translation2d(0.0, 5.548);
         public static final Translation2d redSpeakerLocation = new Translation2d(16.579, 5.548);
         public static final Transform3d robotToCam = new Transform3d(
-            new Translation3d(Units.inchesToMeters(-6.5), 0.0, Units.inchesToMeters(13.25)), // Camera mounted 6.5 inches behind center of robot, and 13.25 inches above the floor
-            new Rotation3d(0, Units.degreesToRadians(-30), Math.PI)); // Camera pointed backwards and angled 30 degrees into the air
-        public static final double centerToReferenceOffset = -Units.inchesToMeters(27.0/2.0 + 3.0); // Reference point is outside of bumper
+                new Translation3d(Units.inchesToMeters(-6.5), 0.0, Units.inchesToMeters(13.25)), // Camera mounted 6.5 inches behind center of robot, and 13.25 inches above the floor
+                new Rotation3d(0, Units.degreesToRadians(-30), Math.PI)); // Camera pointed backwards and angled 30 degrees into the air
+        public static final double centerToReferenceOffset = -Units.inchesToMeters(27.0 / 2.0 + 3.0); // Reference point is outside of bumper
         public static final double maxAngleError = 1.0; // degrees
-        public static final double calibrationFactorRed  =  0.933; // 0.930;
-        public static final double calibrationOffsetRed  = Units.inchesToMeters(0.73); // -1.3);
-        public static final double calibrationFactorBlue =  0.933; // 0.941;
+        public static final double calibrationFactorRed = 0.933; // 0.930;
+        public static final double calibrationOffsetRed = Units.inchesToMeters(0.73); // -1.3);
+        public static final double calibrationFactorBlue = 0.933; // 0.941;
         public static final double calibrationOffsetBlue = Units.inchesToMeters(0.73); // 0.2);
     }
 
@@ -267,7 +271,7 @@ public final class Constants {
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-            new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+                new TrapezoidProfile.Constraints(
+                        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 }
