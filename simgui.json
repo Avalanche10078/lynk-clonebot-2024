@@ -1,0 +1,150 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "CANCoder (v6)[5]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Pigeon 2 (v6)[1]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[10]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[10]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[9]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[9]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[9]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[9]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Command scheduler": "Scheduler",
+      "/SmartDashboard/Disable speed limit": "Command",
+      "/SmartDashboard/Idle shooter": "Command",
+      "/SmartDashboard/Reset heading": "Command",
+      "/SmartDashboard/Shoot Command": "Command",
+      "/SmartDashboard/Zero Gyro": "Command",
+      "/SmartDashboard/Zero heading": "Command",
+      "/SmartDashboard/auto/Auto Chooser": "String Chooser",
+      "/SmartDashboard/shooter/Default shot": "String Chooser",
+      "/SmartDashboard/swerve/Field": "Field2d"
+    },
+    "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "Swerve": {
+          "Mod": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true,
+        "swerve": {
+          "Field": {
+            "open": true
+          },
+          "open": true
+        }
+      },
+      "SwerveModuleState[]##v_SwerveModuleStates": {
+        "SwerveModuleState##v_[0]": {
+          "open": true
+        },
+        "SwerveModuleState##v_[1]": {
+          "open": true
+        },
+        "SwerveModuleState##v_[2]": {
+          "open": true
+        },
+        "SwerveModuleState##v_[3]": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "DartClient_58246638@1": {
+      "open": true
+    },
+    "FRC Web Components_11336773@3": {
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "FRC Web Components_32288373@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Server": {
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "visible": true
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 338
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    }
+  }
+}

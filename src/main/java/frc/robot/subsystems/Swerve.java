@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import frc.robot.SwerveModule;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -31,6 +33,10 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
+    // AdvantageScope Swerve Logging
+    private StructArrayPublisher<SwerveModuleState> publisher;
+    private SwerveModuleState[] states;
+
     private final Field2d field = new Field2d();
 
     public Swerve() {
@@ -50,7 +56,17 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
-        
+
+        states = new SwerveModuleState[] {
+                mSwerveMods[0].getState(),
+                mSwerveMods[1].getState(),
+                mSwerveMods[2].getState(),
+                mSwerveMods[3].getState()
+        };
+
+        publisher = NetworkTableInstance.getDefault().getStructArrayTopic("SwerveModuleStates", SwerveModuleState.struct).publish();
+
+
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
 
         AutoBuilder.configureHolonomic(
@@ -232,9 +248,12 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Swerve/Mod/" + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
 
+        publisher.set(states);
+
         SmartDashboard.putNumber("Gyro", getHeading().getDegrees());
         // System.out.println("Swerve: Heading @ " + getHeading().getDegrees());
         SmartDashboard.putString("swerve/Pose", getPose().toString());
+        SmartDashboard.putString("swerve/speeds", getSpeeds().toString());
         field.setRobotPose(getPose());
     }
 }
