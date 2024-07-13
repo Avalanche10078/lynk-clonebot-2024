@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import frc.robot.SwerveModule;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -31,6 +33,11 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
+    // AdvantageScope Swerve Logging
+    private StructArrayPublisher<SwerveModuleState> currentPublisher;
+    private StructArrayPublisher<SwerveModuleState> desiredPublisher;
+    private SwerveModuleState[] states;
+
     private final Field2d field = new Field2d();
 
     public Swerve() {
@@ -50,7 +57,11 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
-        
+
+        currentPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SmartDashboard/SwerveModuleStates/Current", SwerveModuleState.struct).publish();
+        desiredPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SmartDashboard/SwerveModuleStates/Desired", SwerveModuleState.struct).publish();
+        desiredPublisher.set(getModuleStates());
+
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
 
         AutoBuilder.configureHolonomic(
@@ -93,7 +104,8 @@ public class Swerve extends SubsystemBase {
     public void driveRobotRelative(ChassisSpeeds desiredChassisSpeeds, boolean isOpenLoop) {
         ChassisSpeeds.discretize(desiredChassisSpeeds, 0.02); 
         
-        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds); 
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
+        desiredPublisher.set(swerveModuleStates);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for(SwerveModule mod : mSwerveMods) {
@@ -229,12 +241,23 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Swerve/Mod/" + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Swerve/Mod/" + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Swerve/Mod/" + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Swerve/Mod/" + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
 
-        SmartDashboard.putNumber("Gyro", getHeading().getDegrees());
+
+        states = new SwerveModuleState[] {
+                mSwerveMods[0].getState(),
+                mSwerveMods[1].getState(),
+                mSwerveMods[2].getState(),
+                mSwerveMods[3].getState()
+        };
+
+        currentPublisher.set(states);
+
+        SmartDashboard.putNumber("Gyro", getHeading().getRadians());
         // System.out.println("Swerve: Heading @ " + getHeading().getDegrees());
         SmartDashboard.putString("swerve/Pose", getPose().toString());
+        SmartDashboard.putString("swerve/speeds", getSpeeds().toString());
         field.setRobotPose(getPose());
     }
 }

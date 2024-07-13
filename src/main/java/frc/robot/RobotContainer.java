@@ -176,6 +176,22 @@ public class RobotContainer {
                 .raceWith(Commands.waitSeconds(1.00))))
             .andThen(Commands.print("Slide shot complete"))
         );
+        NamedCommands.registerCommand("Podium Shot",
+                Commands.print("Begin Podium Shot")
+                        .andThen(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.PODIUM); }))
+                        .andThen(
+                                (new ShootCommand(s_Shooter, s_Index, false)
+                                        .raceWith(Commands.waitSeconds(1.00))))
+                        .andThen(Commands.print("Podium shot complete"))
+        );
+        NamedCommands.registerCommand("Subwoofer Shot",
+                Commands.print("Begin Subwoofer Shot")
+                        .andThen(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SUBWOOFER); }))
+                        .andThen(
+                                (new ShootCommand(s_Shooter, s_Index, false)
+                                        .raceWith(Commands.waitSeconds(1.00))))
+                        .andThen(Commands.print("Podium shot complete"))
+        );
         NamedCommands.registerCommand("Short Slide Shot",
             Commands.print("Begin Short Slide Shot")
             .andThen(Commands.runOnce(() -> { s_Shooter.setNextShot(Speed.SHORTSLIDE); }))
